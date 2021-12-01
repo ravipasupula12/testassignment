@@ -4,32 +4,6 @@ error_reporting(0);
 include_once'config.php';
 function resize_Image($file,$type,$max_resulution){
 if(file_exists($file)){
-$image = imagecreatefromjpeg($file);
-$percent = 0.5;
-
-// Content type
-//header('Content-Type: image/jpeg'); 
-//pushing to git hub
-
-
-// Get new dimensions
-list($width, $height) = getimagesize($file);
-$new_width = $width * $percent;
-$new_height = $height * $percent;
-// Resample
-$image_p = imagecreatetruecolor($new_width, $new_height);
-imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-// Output
-imagejpeg($image_p, $image, 100);
- }
-}
-
-
-
-
-    /*//header('Content-type: image/jpg'); 
-    //echo $type;
-    //exit;
     if($type=='JPG' || $type=='JPEG' || $type=='jpg' || $type=='jpeg') $original = imagecreatefromjpeg($file);
     if($type=='PNG') $original = imagecreatefrompng($file);
     if($type=='GIF') $original = imagecreatefromgif($file);
@@ -48,13 +22,35 @@ imagejpeg($image_p, $image, 100);
     if($original){
         $new_image = imagecreatetruecolor($new_width, $new_height);
         imagecopyresampled($new_image, $original, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+        header('Content-type: image/jpeg'); 
         imagejpeg($new_image,$file,90);
     }
 
    }
 
-}*/
+}
+/*$percent = 0.5;
+// Content type
+//header('Content-Type: image/jpeg'); 
+// Get new dimensions
+list($width, $height) = getimagesize($file);
+//echo $width;
+//echo "<br>".$width;
 
+$new_width = $width * $percent;
+$new_height = $height * $percent;
+echo $new_width."<br>".$new_height;
+//exit;  
+// Resample
+$image_p = imagecreatetruecolor($new_width, $new_height);
+$image = imagecreatefromjpeg($file);
+imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+// Output
+header('Content-Type: image/jpeg');
+imagejpeg($image_p, $image, 100);
+ }
+}*/ 
+    
 /*function showImages($path,$fileType){
     //resize_Image($path,$fileType,500);
     return "<img src='$path'/>";
@@ -67,11 +63,7 @@ if(isset($_POST['add'])){
         $fileName = $_FILES['image']['name'];
         $fileTmpName = $_FILES['image']['tmp_name'];
 
-        //echo $fileName;
-        //$target_file = 'admin/uploads/'.$filename;
-
-        // Allow certain file formats 
-        $allowTypes = array('JPG','PNG','JPEG','GIF'); 
+        $allowTypes = array('JPG','PNG','JPEG','GIF','jpg','jpeg','png','gif'); 
         if(in_array($fileType, $allowTypes)){ 
                     $image = $_FILES['image']['name'];                         
                 
@@ -88,13 +80,13 @@ if(isset($_POST['add'])){
         $msg="Inserted Successfully";
         //echo $path;
        // exit;
-        move_uploaded_file($fileTmpName,$path);
-        //resize_Image($path,$fileType,500);
+        resize_Image($path,$fileType,200);
+        move_uploaded_file($fileTmpName,$path);        
         echo "<table align='center' width=600px height='400' border=0> <td>
 
-        <img src='$path'/ width='600' height='400' align='center'>
+        <img src='$path'/ width='500' height='300' align='center'>
         ".$msg."<td></table>"; 
-        //showImages($path,$fileType);
+        
            
          }
         }
