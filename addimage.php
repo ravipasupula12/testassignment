@@ -9,7 +9,7 @@ $percent = 0.5;
 
 // Content type
 //header('Content-Type: image/jpeg'); 
-
+//pushing to git hub
 
 
 // Get new dimensions
