@@ -8,7 +8,9 @@ $image = imagecreatefromjpeg($file);
 $percent = 0.5;
 
 // Content type
-//header('Content-Type: image/jpeg');
+//header('Content-Type: image/jpeg'); 
+
+
 
 // Get new dimensions
 list($width, $height) = getimagesize($file);
